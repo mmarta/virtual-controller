@@ -5,16 +5,35 @@
         <title>Virtual Controller</title>
     </head>
     <body>
-        <p>Press the "A" key on your keyboard to virtually press Button 1 in my arcade.</p>
+        <h1>The WiFi Virtual Game Controller</h1>
+        <ul>
+            <li>Joystick controls: Arrow Keys</li>
+            <li>Button 1: Z</li>
+            <li>Button 2: X</li>
+            <li>Button 3: C</li>
+            <li>Insert Coin: 5</li>
+            <li>Start Button: 1</li>
+        </ul>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
             var pinMap = {
-                65: 17
+                90: 'B1',
+                88: 'B2',
+                67: 'B3',
+                37: 'LEFT',
+                38: 'UP',
+                39: 'RIGHT',
+                40: 'DOWN',
+                53: 'COIN',
+                49: 'START'
             };
 
             var keyMap = {};
 
             function keyFunc(e, pressed) {
+                // Prevent default behavior
+                e.preventDefault();
+
                 var keyCode = e.which;
                 if(keyMap[keyCode] && pressed) {
                     return;
@@ -29,11 +48,11 @@
                 keyMap[keyCode] = pressed;
             }
 
-            document.addEventListener('keydown', function(e) {
+            window.addEventListener('keydown', function(e) {
                 keyFunc(e, true);
             });
 
-            document.addEventListener('keyup', function(e) {
+            window.addEventListener('keyup', function(e) {
                 keyFunc(e, false);
             });
         </script>
