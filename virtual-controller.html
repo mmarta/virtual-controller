@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Virtual Controller</title>
+    </head>
+    <body>
+        <p>Press the "A" key on your keyboard to virtually press Button 1 in my arcade.</p>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            var pinMap = {
+                65: 17
+            };
+
+            var keyMap = {};
+
+            function keyFunc(e, pressed) {
+                var keyCode = e.which;
+                if(keyMap[keyCode] && pressed) {
+                    return;
+                }
+
+                if(pinMap[keyCode]) {
+                    axios.post('http://67.82.187.125:5001/switch', {
+                        pin: pinMap[keyCode],
+                        pressed: pressed
+                    });
+                }
+                keyMap[keyCode] = pressed;
+            }
+
+            document.addEventListener('keydown', function(e) {
+                keyFunc(e, true);
+            });
+
+            document.addEventListener('keyup', function(e) {
+                keyFunc(e, false);
+            });
+        </script>
+    </body>
+</html>
